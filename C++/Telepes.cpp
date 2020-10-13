@@ -82,59 +82,44 @@ public:
 
     
     void dolgozik(string& munkak) {
-        int energia = 0;
-        int vessz = 0;
-        int length = 0;
+        char* feladat = const_cast<char*>(munkak.c_str());
+        string eredm = "";
 
-        for (int i = 0; i < munkak.size(); i++)
-        {
-            if (vessz == get_ero())
-            {
-                length++;
+        int counter = 1;
+        if (munkak.length() != 1){
+            for (int i = 0; i < munkak.size(); i++) {
+                if (feladat[i] == ';')
+                {
+                    counter++;
+                }
+                if (counter > get_ero()) {
+                    string betu = string(1,feladat[i]);
+                    eredm.append(betu);
+                }
             }
-            if (munkak[i] == ';')
-            {
-                vessz++;
+        } else {
+            if (get_ero() < 1) {
+                string betu = string(1,feladat[0]);
+                eredm.append(betu);
             }
         }
-        if (vessz == 0)
-        {
-            length = munkak.size();
+        if (eredm.length()>1){
+            eredm = eredm.substr(1, eredm.length());
         }
+
+         munkak = eredm;
         
-        char sad[length - 1];
-
-        for (int i = length; i > 0; i--)
-        { 
-            if (munkak[i] == ';')
-            {
-                energia++;
-                sad[i] = munkak[i];
-            } else {
-                sad[i] = munkak[i];
-            }
-
-            if(energia == vessz-get_ero()) {
-                break;
-            }
-        }
-        munkak.clear();
-        for (int i = 0; i < length; i++)
-        {
-            munkak[i] = sad[i];
-        }
-        if(vessz == 0 && get_ero() > 0) {
-            munkak.clear();
-        }
         
+
     }
    
 };
 
-int main(int argc, char const *argv[])
-    {
-        
-        return 0;
-    }
+
+int main() {
+
+    return 0;
+}
+
 
 
